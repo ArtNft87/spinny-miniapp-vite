@@ -9,6 +9,7 @@ const outcomes = [
   { text: "You spun worse than a normie 🫠", image: "/memes/lose6.png", type: "lose" },
   { text: "Bottom fraud. Nice buy, genius. 👎", image: "/memes/lose2.png", type: "lose" },
   { text: "SHIBA? More like Shitba. 🐕‍🦺", image: "/memes/lose7.png", type: "lose" },
+
   { text: "You earned another spin 🌀", image: "/memes/win3.png", type: "win" },
   { text: "Spinny approves. Degen mode on 🦊", image: "/memes/win1.png", type: "win" },
   { text: "Meme minigames coming soon... 🔥", image: "/memes/win2.png", type: "win" },
@@ -26,7 +27,6 @@ export default function App() {
   const shortWallet = publicKey
     ? publicKey.toBase58().slice(0, 4) + ".." + publicKey.toBase58().slice(-4)
     : "";
-
   const mockBalance = "~69,420.00";
 
   const spin = () => {
@@ -44,13 +44,13 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <h1 className="title">🎰 Spinny MiniApp</h1>
+      <h1 className="app-title">Spinny Degen Roulette</h1>
 
       {publicKey && (
-        <>
-          <p className="wallet">Connected: {publicKey.toBase58()}</p>
+        <div className="wallet-row">
+          <button className="wallet-id">{shortWallet}</button>
           <p className="balance">$PINN Balance: <strong>{mockBalance}</strong></p>
-        </>
+        </div>
       )}
 
       <div className="controls">
@@ -68,12 +68,19 @@ export default function App() {
 
       {result && (
         <div className={`result ${result.type}`}>
-          <h2 className="result-text">{result.text}</h2>
-          <img src={result.image} alt="Result" className="result-image" />
+          <h2>{result.text}</h2>
+          <img src={result.image} alt="Spin result" className="result-image" />
+          <div className="outcome-label">
+            {result.type === "win" ? "🔥 YOU WON!" : "💀 RUGGED"}
+          </div>
         </div>
       )}
 
-      <img src="/memes/spinny-degen.png" alt="Spinny Fox" className="spinny-character" />
+      <img
+        src="/memes/spinny-degen.png"
+        alt="Spinny Mascot"
+        className="spinny-fox"
+      />
     </div>
   );
 }

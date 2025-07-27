@@ -113,3 +113,38 @@ body {
 .result.win .outcome-label {
   color: #00ffb3;
 }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+.app-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  color: #f8f8f8;
+  letter-spacing: 1px;
+  animation: titleGlow 3s ease-in-out infinite alternate;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes titleGlow {
+  from {
+    text-shadow: 0 0 4px #6b46c1;
+  }
+  to {
+    text-shadow: 0 0 12px #ff4d4f;
+  }
+}
+
+.wallet-id {
+  background-color: #2e2e2e;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: monospace;
+}
+
+.spinny-fox {
+  margin-top: 3rem;
+  max-width: 160px;
+  opacity: 0.9;
+}

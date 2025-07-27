@@ -1,116 +1,117 @@
 body {
   margin: 0;
-  font-family: 'Courier New', monospace;
-  background-color: #0f0f0f;
+  padding: 0;
+  background-color: #121212;
+  font-family: 'Courier New', Courier, monospace;
   color: white;
 }
 
-.app-container {
-  padding: 2rem;
+.app {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.app-title {
-  font-size: 2.5rem;
-  color: #e53935; /* Sleek red */
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1.5rem;
-}
-
-.game-frame {
-  background-color: #1e1e1e;
-  border: 2px solid #333;
+.frame {
+  background-color: #1c1c1c;
+  padding: 20px;
   border-radius: 16px;
-  padding: 2rem;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   text-align: center;
 }
 
-.wallet-row {
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff3c3c;
+  margin-bottom: 15px;
+}
+
+.wallet-bar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+  font-size: 14px;
+  color: #bbb;
+  margin-bottom: 12px;
 }
 
-.wallet-display {
-  background: #2e2e2e;
-  border: none;
-  color: #fff;
-  padding: 0.6rem 1rem;
+.wallet-tag {
+  background: #2c2c2c;
+  padding: 4px 8px;
   border-radius: 8px;
-  font-weight: bold;
 }
 
-.balance {
-  font-size: 0.9rem;
-  color: #aaa;
+.btn-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
-.controls {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-.wallet-button {
-  margin-bottom: 1rem;
-}
-
-.spin-button {
-  font-size: 1.2rem;
-  padding: 0.8rem 2.5rem;
-  border-radius: 12px;
-  background-color: #d32f2f;
+.phantom {
+  background-color: #9146ff;
   color: white;
+  padding: 10px 16px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
 }
 
-.cooldown {
-  color: #ff9800;
+.spin {
+  background-color: #ff3c3c;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
   font-weight: bold;
+  cursor: pointer;
 }
 
-.result {
-  margin-top: 1rem;
-}
-
-.result-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  max-height: 220px;
+.spin:disabled {
+  background-color: #400000;
+  cursor: not-allowed;
 }
 
 .result-text {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  font-style: italic;
+  font-size: 16px;
+  margin: 10px 0;
 }
 
-.outcome-label {
+.result-text.win {
+  color: #00ff7b;
+}
+
+.result-text.lose {
+  color: #ff6b6b;
+}
+
+.outcome-quote {
+  font-size: 18px;
   font-weight: bold;
-  color: #00e676;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 }
 
-.result.lose .outcome-label {
-  color: #ff1744;
+.meme {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 10px;
+  margin-bottom: 12px;
 }
 
-.share-button {
+.share-btn {
   background-color: #1da1f2;
   color: white;
-  padding: 0.7rem 1.5rem;
+  padding: 12px 20px;
   border: none;
   border-radius: 8px;
+  font-size: 14px;
   font-weight: bold;
-  font-size: 1rem;
   cursor: pointer;
+  width: 100%;
 }

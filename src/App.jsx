@@ -1,100 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom';
+import React, { useEffect, useState } from "react";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { WalletProvider, useWallet } from "@solana/wallet-adapter-react";
+import { clusterApiUrl, Connection } from "@solana/web3.js";
 
-const outcomes = [
-  {
-    text: "Spinny approves. Degen mode on",
-    image: "/gifs/win-1.png",
-    type: "win",
-  },
-  {
-    text: "Bottom fraud. Nice buy, genius.",
-    image: "/gifs/lose-1.png",
-    type: "lose",
-  },
+import "./App.css";
+
+const memes = [
+  { text: "Spinny approves. Degen mode on", image: "/gifs/degen.png", type: "win" },
+  { text: "Bottom fraud. Nice buy, genius.", image: "/gifs/fraud.png", type: "lose" },
 ];
 
-const App = () => {
-  const [walletAddress, setWalletAddress] = useState(null);
+function InnerApp() {
+  const { publicKey, connect, disconnect, connected } = useWallet();
   const [cooldown, setCooldown] = useState(0);
   const [outcome, setOutcome] = useState(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCooldown((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const connectWallet = async () => {
-    try {
-      if (window?.Telegram?.WebApp?.initData) {
-        const provider = window.solana;
-        if (provider?.isPhantom) {
-          const res = await provider.connect();
-          setWalletAddress(res.publicKey.toString());
-          return;
-        }
-      }
-
-      const adapter = new PhantomWalletAdapter();
-      await adapter.connect();
-      setWalletAddress(adapter.publicKey.toString());
-    } catch (err) {
-      console.error('Wallet connection error:', err);
+    if (cooldown > 0) {
+      const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+      return () => clearTimeout(timer);
     }
-  };
+  }, [cooldown]);
+
+  const shortKey = (key) => key?.toBase58().slice(0, 4) + ".." + key?.toBase58().slice(-4);
 
   const spin = () => {
     if (cooldown > 0) return;
-
-    const result = outcomes[Math.floor(Math.random() * outcomes.length)];
+    const result = memes[Math.floor(Math.random() * memes.length)];
     setOutcome(result);
     setCooldown(30);
   };
 
-  const shareToTwitter = () => {
-    if (!outcome) return;
-    const baseUrl = "https://twitter.com/intent/tweet";
-    const win = outcome.type === 'win';
-    const message = win
-      ? `I just WON with Spinny! 🤑\n"${outcome.text}"\nSpin. Roast. Win. \n@Spinnit_xyz raining $PINN\nhttps://t.me/SpinnIt_Bot`
-      : `Just got RUGGED by Spinny 🤡\n"${outcome.text}"\nDegen losses paid in memes. @Spinnit_xyz doing buybacks.\nhttps://t.me/SpinnIt_Bot`;
-
-    window.open(`${baseUrl}?text=${encodeURIComponent(message)}`, '_blank');
+  const share = () => {
+    const base = outcome?.type === "win" ? "🔥 You Won: Legend!" : "💀 Better Luck Next Time: Rugged!";
+    const message = `${base}\n${outcome?.text}\nRugged by Spinny (@Spinnit_xyz)\nhttps://t.me/SpinnIt_Bot`;
+    const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+    window.open(twitterURL, "_blank");
   };
 
   return (
-    <div className="app">
-      <div className="frame">
-        <h1 className="title">Spinny Degen Roulette</h1>
-        <div className="wallet-bar">
-          <span className="wallet-tag">{walletAddress ? `${walletAddress.slice(0, 4)}..${walletAddress.slice(-4)}` : 'Not Connected'}</span>
-          <span className="balance">$PINN Balance: ~69,420.00</span>
-        </div>
-        <div className="btn-row">
-          <button className="phantom" onClick={connectWallet}>🟣 Connect</button>
-          <button className="spin" disabled={cooldown > 0} onClick={spin}>
-            {cooldown > 0 ? `Cooldown: ${cooldown}s` : 'Spin'}
-          </button>
-        </div>
-
-        {outcome && (
-          <>
-            <div className={`result-text ${outcome.type}`}>
-              {outcome.type === 'win'
-                ? '🦊 You Won: Legend!'
-                : '💀 Better Luck Next Time: Rugged!'}
-            </div>
-            <div className="outcome-quote">{outcome.text}</div>
-            <img src={outcome.image} alt="result meme" className="meme" />
-            <button className="share-btn" onClick={shareToTwitter}>Share on Twitter</button>
-          </>
-        )}
+    <div className="app-wrapper">
+      <h1>Spinny Degen Roulette</h1>
+      <div>
+        <button>{connected ? shortKey(publicKey) : "Not Connected"}</button>
+        <span style={{ marginLeft: "10px", color: "#ccc" }}>$PINN Balance: ~69,420.00</span>
       </div>
+      <div style={{ margin: "10px 0" }}>
+        <button className="phantom-button" onClick={connect}>
+          🟣 {connected ? "Connected" : "Connect"}
+        </button>
+        <button style={{ background: "#600", color: "white", marginLeft: "10px" }}>
+          Cooldown: {cooldown}s
+        </button>
+      </div>
+      {outcome && (
+        <>
+          <div style={{ color: outcome.type === "win" ? "lime" : "red", marginTop: "10px" }}>
+            {outcome.type === "win" ? "🦊 You Won: Legend!" : "💀 Better Luck Next Time: Rugged!"}
+          </div>
+          <p><b>{outcome.text}</b></p>
+          <img src={outcome.image} alt="result meme" className="outcome-image" />
+        </>
+      )}
+      <button onClick={spin} style={{ marginTop: "10px" }}>🎰 Spin</button>
+      {outcome && (
+        <button className="share-button" onClick={share}>Share on Twitter</button>
+      )}
     </div>
   );
-};
+}
 
-export default App;
+export default function App() {
+  const endpoint = clusterApiUrl("mainnet-beta");
+  const wallet = new PhantomWalletAdapter();
+
+  return (
+    <WalletProvider wallets={[wallet]} autoConnect>
+      <InnerApp />
+    </WalletProvider>
+  );
+}

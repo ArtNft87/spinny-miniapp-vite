@@ -1,117 +1,32 @@
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #121212;
-  font-family: 'Courier New', Courier, monospace;
+.app-wrapper {
+  background-color: #111;
   color: white;
-}
-
-.app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  border: 2px solid #aa0000;
   padding: 20px;
-  box-sizing: border-box;
-}
-
-.frame {
-  background-color: #1c1c1c;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
-  width: 100%;
+  border-radius: 20px;
   max-width: 400px;
-  text-align: center;
+  margin: 20px auto;
+  box-shadow: 0 0 20px red;
 }
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ff3c3c;
-  margin-bottom: 15px;
-}
-
-.wallet-bar {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: #bbb;
-  margin-bottom: 12px;
-}
-
-.wallet-tag {
-  background: #2c2c2c;
-  padding: 4px 8px;
-  border-radius: 8px;
-}
-
-.btn-row {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-.phantom {
-  background-color: #9146ff;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.spin {
-  background-color: #ff3c3c;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.spin:disabled {
-  background-color: #400000;
-  cursor: not-allowed;
-}
-
-.result-text {
-  font-size: 16px;
-  margin: 10px 0;
-}
-
-.result-text.win {
-  color: #00ff7b;
-}
-
-.result-text.lose {
-  color: #ff6b6b;
-}
-
-.outcome-quote {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.meme {
-  width: 100%;
-  max-width: 280px;
+.outcome-image {
+  width: 200px;
+  margin: 10px auto;
+  display: block;
   border-radius: 10px;
-  margin-bottom: 12px;
 }
 
-.share-btn {
+.share-button {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
   background-color: #1da1f2;
   color: white;
-  padding: 12px 20px;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: bold;
   cursor: pointer;
-  width: 100%;
+}
+
+.share-button:hover {
+  background-color: #0d8ddb;
 }

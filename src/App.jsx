@@ -4,14 +4,11 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import "./App.css";
 
 const outcomes = [
-  // 🔥 Lose roasts
   { text: "You’d be better off buying LUNA 🌕 in 2022", image: "/memes/lose3.png", type: "lose" },
   { text: "Spinny roasts Pepe — again 🐸", image: "/memes/lose5.png", type: "lose" },
   { text: "You spun worse than a normie 🫠", image: "/memes/lose6.png", type: "lose" },
   { text: "Bottom fraud. Nice buy, genius. 👎", image: "/memes/lose2.png", type: "lose" },
   { text: "SHIBA? More like Shitba. 🐕‍🦺", image: "/memes/lose7.png", type: "lose" },
-
-  // 🎉 Win spins
   { text: "You earned another spin 🌀", image: "/memes/win3.png", type: "win" },
   { text: "Spinny approves. Degen mode on 🦊", image: "/memes/win1.png", type: "win" },
   { text: "Meme minigames coming soon... 🔥", image: "/memes/win2.png", type: "win" },
@@ -29,6 +26,7 @@ export default function App() {
   const shortWallet = publicKey
     ? publicKey.toBase58().slice(0, 4) + ".." + publicKey.toBase58().slice(-4)
     : "";
+
   const mockBalance = "~69,420.00";
 
   const spin = () => {
@@ -46,12 +44,12 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <h1>🎰 Spinny MiniApp</h1>
+      <h1 className="title">🎰 Spinny MiniApp</h1>
 
       {publicKey && (
         <>
           <p className="wallet">Connected: {publicKey.toBase58()}</p>
-          <p>$PINN Balance: <strong>{mockBalance}</strong></p>
+          <p className="balance">$PINN Balance: <strong>{mockBalance}</strong></p>
         </>
       )}
 
@@ -62,7 +60,7 @@ export default function App() {
         ) : (
           publicKey && (
             <button className="spin-button" onClick={spin}>
-              🔁 Spin
+              Spin
             </button>
           )
         )}
@@ -70,17 +68,12 @@ export default function App() {
 
       {result && (
         <div className={`result ${result.type}`}>
-          <h2>{result.text}</h2>
-          <img src={result.image} alt="Spin result" className="result-image" />
+          <h2 className="result-text">{result.text}</h2>
+          <img src={result.image} alt="Result" className="result-image" />
         </div>
       )}
 
-      {/* Floating Spinny Fox */}
-      <img
-        src="/memes/spinny-degen.png"
-        alt="Spinny Fox"
-        className="spinny-character"
-      />
+      <img src="/memes/spinny-degen.png" alt="Spinny Fox" className="spinny-character" />
     </div>
   );
 }

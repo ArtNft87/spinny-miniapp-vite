@@ -1,101 +1,78 @@
-import React, { useState, useEffect } from "react";
-import {
-  ConnectionProvider,
-  WalletProvider,
-  useWallet,
-} from "@solana/wallet-adapter-react";
-import {
-  WalletModalProvider,
-  WalletMultiButton,
-} from "@solana/wallet-adapter-react-ui";
-import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
-import { clusterApiUrl } from "@solana/web3.js";
-import "@solana/wallet-adapter-react-ui/styles.css";
+import React, { useEffect, useState } from "react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 import "./App.css";
 
-const winOutcomes = [
-  { text: "You just pumped $PINN like a giga chad 📈", image: "/memes/win1.png" },
-  { text: "DEGEN MODE: ON 🔥 Spinny approved.", image: "/memes/win3.png" },
-  { text: "You spun it. You won it. Let 'em cry 🥶", image: "/memes/win4.png" },
-  { text: "This was the top. And you’re the king 👑", image: "/memes/win6.png" },
-  { text: "SPINNY: Degen Roulette Legend", image: "/memes/win7.gif" },
-  { text: "MiniGame incoming. You're early 🚀", image: "/memes/win2.png" },
-  { text: "Feeling lucky? You ARE lucky 😏", image: "/memes/win5.gif" },
+const outcomes = [
+  // 🔥 Lose roasts
+  { text: "You’d be better off buying LUNA 🌕 in 2022", image: "/memes/lose3.png", type: "lose" },
+  { text: "Spinny roasts Pepe — again 🐸", image: "/memes/lose5.png", type: "lose" },
+  { text: "You spun worse than a normie 🫠", image: "/memes/lose6.png", type: "lose" },
+  { text: "Bottom fraud. Nice buy, genius. 👎", image: "/memes/lose2.png", type: "lose" },
+  { text: "SHIBA? More like Shitba. 🐕‍🦺", image: "/memes/lose7.png", type: "lose" },
+
+  // 🎉 Win spins
+  { text: "You earned another spin 🌀", image: "/memes/win3.png", type: "win" },
+  { text: "Spinny approves. Degen mode on 🦊", image: "/memes/win1.png", type: "win" },
+  { text: "Meme minigames coming soon... 🔥", image: "/memes/win2.png", type: "win" },
+  { text: "Feeling lucky, punk? 🍀", image: "/memes/win6.png", type: "win" },
+  { text: "Legendary spin. +420 $PINN 🚀", image: "/memes/win7.gif", type: "win" },
 ];
 
-const loseOutcomes = [
-  { text: "RUGGED. Bottom fraud simulator activated 💀", image: "/memes/lose2.png" },
-  { text: "You spun worse than a normie, PEPE 🐸", image: "/memes/lose6.png" },
-  { text: "You’d be better off buying LUNA 🌕 in 2022", image: "/memes/lose3.png" },
-  { text: "Spinny roasts incoming... and you got cooked 🍗", image: "/memes/lose1.png" },
-  { text: "Spinny says: SHIBA? More like SHEEEEESH 🐕‍🔥", image: "/memes/lose7.png" },
-  { text: "You just spun... and lost your dignity 🫠", image: "/memes/lose4.png" },
-  { text: "Roasted harder than a Pepe bagholder", image: "/memes/lose5.png" },
-];
+const getRandomOutcome = () => outcomes[Math.floor(Math.random() * outcomes.length)];
 
-const OutcomeDisplay = ({ outcome }) => {
-  if (!outcome) return null;
-  return (
-    <div className="outcome">
-      <h2>{outcome.text}</h2>
-      <img src={outcome.image} alt="spin result" className="meme" />
-    </div>
-  );
-};
-
-const SpinnyGame = () => {
+export default function App() {
   const { publicKey } = useWallet();
+  const [result, setResult] = useState(null);
   const [cooldown, setCooldown] = useState(0);
-  const [outcome, setOutcome] = useState(null);
 
-  const handleSpin = () => {
+  const shortWallet = publicKey
+    ? publicKey.toBase58().slice(0, 4) + ".." + publicKey.toBase58().slice(-4)
+    : "";
+  const mockBalance = "~69,420.00";
+
+  const spin = () => {
     if (cooldown > 0) return;
-
-    const isWin = Math.random() < 0.5;
-    const pick = isWin
-      ? winOutcomes[Math.floor(Math.random() * winOutcomes.length)]
-      : loseOutcomes[Math.floor(Math.random() * loseOutcomes.length)];
-    setOutcome(pick);
+    setResult(getRandomOutcome());
     setCooldown(30);
   };
 
   useEffect(() => {
-    if (cooldown === 0) return;
-    const interval = setInterval(() => setCooldown((c) => c - 1), 1000);
-    return () => clearInterval(interval);
-  }, [cooldown]);
+    const timer = setInterval(() => {
+      setCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="game-container">
-      <h1>Spinny MiniApp</h1>
+    <div className="app-container">
+      <h1>🎰 Spinny MiniApp</h1>
       {publicKey && (
-        <div className="wallet-info">
-          <p>Connected: {publicKey.toBase58()}</p>
-          <p>$PINN Balance: ~69,420.00</p>
+        <>
+          <p className="wallet">Connected: {publicKey.toBase58()}</p>
+          <p>$PINN Balance: <strong>{mockBalance}</strong></p>
+        </>
+      )}
+
+      <div className="controls">
+        <WalletMultiButton className="wallet-button" />
+        {cooldown > 0 ? (
+          <div className="cooldown">Cooldown: {cooldown}s</div>
+        ) : (
+          publicKey && (
+            <button className="spin-button" onClick={spin}>
+              🔁 Spin
+            </button>
+          )
+        )}
+      </div>
+
+      {result && (
+        <div className={`result ${result.type}`}>
+          <h2>{result.text}</h2>
+          <img src={result.image} alt="Spin result" className="result-image" />
         </div>
       )}
-      <WalletMultiButton />
-      <button onClick={handleSpin} disabled={cooldown > 0} className="spin-btn">
-        {cooldown > 0 ? `Cooldown: ${cooldown}s` : "Spin Now"}
-      </button>
-      <OutcomeDisplay outcome={outcome} />
     </div>
   );
-};
-
-const App = () => {
-  const endpoint = clusterApiUrl("devnet");
-  const wallets = [new PhantomWalletAdapter()];
-
-  return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>
-          <SpinnyGame />
-        </WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
-  );
-};
-
-export default App;
+}

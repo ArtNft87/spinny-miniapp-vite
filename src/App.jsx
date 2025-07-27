@@ -47,6 +47,7 @@ export default function App() {
   return (
     <div className="app-container">
       <h1>🎰 Spinny MiniApp</h1>
+
       {publicKey && (
         <>
           <p className="wallet">Connected: {publicKey.toBase58()}</p>
@@ -73,6 +74,13 @@ export default function App() {
           <img src={result.image} alt="Spin result" className="result-image" />
         </div>
       )}
+
+      {/* Floating Spinny Fox */}
+      <img
+        src="/memes/spinny-degen.png"
+        alt="Spinny Fox"
+        className="spinny-character"
+      />
     </div>
   );
 }

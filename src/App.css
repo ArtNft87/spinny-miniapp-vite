@@ -1,134 +1,116 @@
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
-  background: #111;
+  font-family: 'Courier New', monospace;
+  background-color: #0f0f0f;
   color: white;
-  font-size: 1.1rem; /* ⬅️ 10% bigger */
 }
 
-.app-bg {
-  background: #111;
-  min-height: 100vh;
+.app-container {
+  padding: 2rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 40px;
 }
 
-.game-box {
-  background: #181818;
+.app-title {
+  font-size: 2.5rem;
+  color: #e53935; /* Sleek red */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+.game-frame {
+  background-color: #1e1e1e;
+  border: 2px solid #333;
   border-radius: 16px;
-  padding: 32px;
-  max-width: 460px; /* ⬅️ wider */
+  padding: 2rem;
   width: 100%;
-  box-shadow: 0 0 25px rgba(255, 0, 80, 0.2);
+  max-width: 500px;
   text-align: center;
 }
 
-.title {
-  font-size: 26px;
-  font-weight: 800;
-  color: #ff3333;
-  text-shadow: 0 0 5px #ff333355;
-  margin-bottom: 20px;
-}
-
-.wallet-info {
+.wallet-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 1rem;
 }
 
 .wallet-display {
-  background: #2a2a2a;
+  background: #2e2e2e;
   border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  color: white;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
   font-weight: bold;
-  font-size: 14px;
 }
 
 .balance {
-  font-size: 14px;
-  color: #ccc;
+  font-size: 0.9rem;
+  color: #aaa;
 }
 
 .controls {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin: 20px 0;
-  flex-wrap: wrap;
-}
-
-.spin-button {
-  background: #ff3333;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-.cooldown {
-  background: #330000;
-  color: #ff9999;
-  border: 1px dashed #ff3c3c;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .wallet-button {
-  background: #8247e5;
-  border-radius: 8px;
-  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+.spin-button {
+  font-size: 1.2rem;
+  padding: 0.8rem 2.5rem;
+  border-radius: 12px;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cooldown {
+  color: #ff9800;
+  font-weight: bold;
 }
 
 .result {
-  margin-top: 20px;
+  margin-top: 1rem;
 }
 
-.label {
+.result-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  max-height: 220px;
+}
+
+.result-text {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.outcome-label {
   font-weight: bold;
-  font-size: 17px;
-  margin-bottom: 6px;
-  color: #00ff88;
+  color: #00e676;
+  margin-bottom: 1rem;
 }
 
-.result.lose .label {
-  color: #ff4a4a;
-}
-
-.quote {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 12px 0;
-}
-
-.meme {
-  max-width: 240px;
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 10px;
+.result.lose .outcome-label {
+  color: #ff1744;
 }
 
 .share-button {
-  background: #1da1f2;
+  background-color: #1da1f2;
   color: white;
-  font-weight: 600;
-  padding: 14px 28px;
+  padding: 0.7rem 1.5rem;
   border: none;
   border-radius: 8px;
-  font-size: 15px;
-  margin-top: 18px;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
+import WebApp from "@twa-dev/sdk";
 import "./App.css";
 
 const outcomes = [
-  { text: "You’d be better off buying LUNA in 2022", image: "/memes/lose3.png", type: "lose" },
-  { text: "Spinny roasts Pepe — again", image: "/memes/lose5.png", type: "lose" },
-  { text: "You spun worse than a normie", image: "/memes/lose6.png", type: "lose" },
-  { text: "Bottom fraud. Nice buy, genius.", image: "/memes/lose2.png", type: "lose" },
-  { text: "SHIBA? More like Shitba.", image: "/memes/lose7.png", type: "lose" },
-  { text: "You earned another spin", image: "/memes/win3.png", type: "win" },
-  { text: "Spinny approves. Degen mode on", image: "/memes/win1.png", type: "win" },
-  { text: "Meme minigames coming soon...", image: "/memes/win2.png", type: "win" },
-  { text: "Feeling lucky, punk?", image: "/memes/win6.png", type: "win" },
+  { text: "You’d be better off buying LUNA 🌕 in 2022", image: "/memes/lose3.png", type: "lose" },
+  { text: "Spinny roasts Pepe — again 🐸", image: "/memes/lose5.png", type: "lose" },
+  { text: "You spun worse than a normie 🫠", image: "/memes/lose6.png", type: "lose" },
+  { text: "Bottom fraud. Nice buy, genius. 👎", image: "/memes/lose2.png", type: "lose" },
+  { text: "SHIBA? More like Shitba. 🐕‍🦺", image: "/memes/lose7.png", type: "lose" },
+  { text: "You earned another spin 🌀", image: "/memes/win3.png", type: "win" },
+  { text: "Spinny approves. Degen mode on 🦊", image: "/memes/win1.png", type: "win" },
+  { text: "Meme minigames coming soon... 🔥", image: "/memes/win2.png", type: "win" },
+  { text: "Feeling lucky, punk? 🍀", image: "/memes/win6.png", type: "win" },
   { text: "Legendary spin. +420 $PINN 🚀", image: "/memes/win7.gif", type: "win" },
 ];
 
@@ -30,30 +31,29 @@ export default function App() {
 
   const spin = () => {
     if (cooldown > 0) return;
-    setResult(getRandomOutcome());
+    const outcome = getRandomOutcome();
+    setResult(outcome);
     setCooldown(30);
   };
 
   const share = () => {
     if (!result) return;
-    const base = "https://twitter.com/intent/tweet";
-    const roast = result.text;
-    const url = "https://t.me/spinnit_xyz";
-    const message =
-      result.type === "win"
-        ? `🦊 I just WON big on Spinny (@Spinnit_xyz): "${roast}"\nSpinny’s doing $PINN buybacks — it's raining degen gold!\n${url}`
-        : `💀 I just got RUGGED by Spinny (@Spinnit_xyz): "${roast}"\nSpinny’s raining $PINN and buying back like Bitconnect on steroids.\n${url}`;
-    const encoded = encodeURIComponent(message);
-    window.open(`${base}?text=${encoded}`, "_blank");
 
-    // 10% free spin chance
-    if (Math.random() < 0.1) {
-      setTimeout(() => {
-        alert("🔥 You earned a bonus spin!");
-        setCooldown(0);
-      }, 500);
-    }
+    const baseText =
+      result.type === "win"
+        ? `I just WON in Spinny's Telegram Mini App. "${result.text}" — Spinny is doing $PINN buybacks today. Respect the fox.`
+        : `I just got RUGGED by Spinny. "${result.text}" — Degen pain is real. But $PINN buybacks are LIVE.`;
+
+    const tweet = `${baseText} 👉 t.me/SpinnIt_Bot?startapp`;
+
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`;
+    window.open(twitterUrl, "_blank");
   };
+
+  useEffect(() => {
+    WebApp.ready();
+    WebApp.expand();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -63,14 +63,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app-bg">
-      <div className="game-box">
-        <h1 className="title">Spinny Degen Roulette</h1>
+    <div className="app-container">
+      <h1 className="app-title">Spinny Degen Roulette</h1>
 
+      <div className="game-frame">
         {publicKey && (
-          <div className="wallet-info">
+          <div className="wallet-row">
             <button className="wallet-display">{shortWallet}</button>
-            <p className="balance">$PINN Balance: <strong>{mockBalance}</strong></p>
+            <p className="balance">$PINN: <strong>{mockBalance}</strong></p>
           </div>
         )}
 
@@ -89,13 +89,12 @@ export default function App() {
 
         {result && (
           <div className={`result ${result.type}`}>
-            <div className="label">
-              {result.type === "win"
-                ? "🦊 You Won: Legend!"
-                : "💀 Better Luck Next Time: Rugged!"}
+            <img src={result.image} alt="Result" className="result-image" />
+            <div className="result-text">{result.text}</div>
+            <div className="outcome-label">
+              {result.type === "win" ? "You Won: Legend!" : "Better Luck Next Time: Rugged!"}
             </div>
-            <h2 className="quote">{result.text}</h2>
-            <img src={result.image} alt="Spinny Meme" className="meme" />
+
             <button className="share-button" onClick={share}>
               Share on Twitter
             </button>

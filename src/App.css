@@ -1,98 +1,115 @@
 body {
   margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom right, #1a1a1a, #2c2c2c);
-  font-family: "Inter", sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
   color: #fff;
   text-align: center;
-  min-height: 100vh;
 }
 
 .app-container {
-  padding: 30px 20px;
+  padding: 2rem;
+}
+
+.app-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fefefe;
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  100% { opacity: 0.85; }
+}
+
+.wallet-row {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.title {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.wallet {
+.wallet-display {
+  background: #333;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
   font-size: 0.9rem;
-  color: #aaa;
-  margin: 4px 0;
 }
 
 .balance {
-  font-size: 1.1rem;
-  margin-bottom: 16px;
+  font-size: 1rem;
+  opacity: 0.9;
 }
 
 .controls {
+  margin: 1.5rem 0;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .wallet-button {
-  background-color: #5b2eea !important;
-  color: #fff !important;
-  border-radius: 8px !important;
-  padding: 10px 20px !important;
-  font-weight: bold !important;
+  font-size: 1rem;
+  background-color: #6b46c1 !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
 }
 
 .spin-button {
-  background-color: #00d084;
-  color: #111;
-  font-weight: 700;
-  padding: 12px 30px;
-  font-size: 1rem;
-  border-radius: 10px;
+  background-color: #ff4d4f;
   border: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  box-shadow: 0 0 10px #ff4d4f99;
+  transition: all 0.2s ease;
 }
 
 .spin-button:hover {
-  background-color: #00b073;
+  transform: scale(1.05);
+  background-color: #ff6666;
 }
 
 .cooldown {
-  font-size: 0.95rem;
-  color: #ff5252;
-  padding: 10px 20px;
-  border: 1px dashed #ff5252;
-  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #333;
+  color: #ff6b6b;
+  border: 1px dashed #ff6b6b;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
 }
 
 .result {
-  margin-top: 30px;
-  max-width: 100%;
-  padding: 16px;
+  margin-top: 2rem;
 }
 
-.result-text {
-  font-size: 1.25rem;
-  margin-bottom: 16px;
-  font-weight: bold;
+.result h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
 }
 
 .result-image {
-  width: 100%;
-  max-width: 420px;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
-.spinny-character {
-  width: 150px;
-  margin-top: 40px;
-  opacity: 0.7;
+.outcome-label {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff4d4f;
+}
+.result.win .outcome-label {
+  color: #00ffb3;
 }

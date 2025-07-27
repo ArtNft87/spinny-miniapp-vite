@@ -1,82 +1,85 @@
-import React, { useEffect, useState } from "react";
-import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
-import { WalletProvider, useWallet } from "@solana/wallet-adapter-react";
-import { clusterApiUrl, Connection } from "@solana/web3.js";
+import React, { useState, useEffect } from 'react'
+import './App.css'
 
-import "./App.css";
+const outcomes = [
+  {
+    type: 'win',
+    text: 'Spinny approves. Degen mode on',
+    image: '/gifs/1g.gif',
+  },
+  {
+    type: 'lose',
+    text: 'Bottom fraud. Nice buy, genius.',
+    image: '/gifs/2g.gif',
+  },
+]
 
-const memes = [
-  { text: "Spinny approves. Degen mode on", image: "/gifs/degen.png", type: "win" },
-  { text: "Bottom fraud. Nice buy, genius.", image: "/gifs/fraud.png", type: "lose" },
-];
-
-function InnerApp() {
-  const { publicKey, connect, disconnect, connected } = useWallet();
-  const [cooldown, setCooldown] = useState(0);
-  const [outcome, setOutcome] = useState(null);
+function App() {
+  const [wallet, setWallet] = useState('2YFv..aLcA')
+  const [balance, setBalance] = useState('69,420.00')
+  const [cooldown, setCooldown] = useState(30)
+  const [outcome, setOutcome] = useState(null)
 
   useEffect(() => {
-    if (cooldown > 0) {
-      const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [cooldown]);
+    const timer = setInterval(() => {
+      setCooldown(prev => (prev > 0 ? prev - 1 : 0))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
-  const shortKey = (key) => key?.toBase58().slice(0, 4) + ".." + key?.toBase58().slice(-4);
+  const handleSpin = () => {
+    const result = outcomes[Math.floor(Math.random() * outcomes.length)]
+    setOutcome(result)
+    setCooldown(30)
+  }
 
-  const spin = () => {
-    if (cooldown > 0) return;
-    const result = memes[Math.floor(Math.random() * memes.length)];
-    setOutcome(result);
-    setCooldown(30);
-  };
-
-  const share = () => {
-    const base = outcome?.type === "win" ? "🔥 You Won: Legend!" : "💀 Better Luck Next Time: Rugged!";
-    const message = `${base}\n${outcome?.text}\nRugged by Spinny (@Spinnit_xyz)\nhttps://t.me/SpinnIt_Bot`;
-    const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
-    window.open(twitterURL, "_blank");
-  };
+  const handleShare = () => {
+    const message = outcome
+      ? `${outcome.text} — Powered by @Spinnit_xyz and $PINN buybacks.`
+      : 'Try your luck on Spinny Degen Roulette!'
+    const url = `https://t.me/SpinnIt_Bot`
+    const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      message
+    )}&url=${encodeURIComponent(url)}`
+    window.open(tweet, '_blank')
+  }
 
   return (
-    <div className="app-wrapper">
-      <h1>Spinny Degen Roulette</h1>
+    <div className="container">
+      <div className="header">Spinny Degen Roulette</div>
       <div>
-        <button>{connected ? shortKey(publicKey) : "Not Connected"}</button>
-        <span style={{ marginLeft: "10px", color: "#ccc" }}>$PINN Balance: ~69,420.00</span>
+        <button className="wallet-button">🔐 {wallet}</button>
+        <span style={{ marginLeft: 10 }}>$PINN Balance: ~{balance}</span>
       </div>
-      <div style={{ margin: "10px 0" }}>
-        <button className="phantom-button" onClick={connect}>
-          🟣 {connected ? "Connected" : "Connect"}
-        </button>
-        <button style={{ background: "#600", color: "white", marginLeft: "10px" }}>
-          Cooldown: {cooldown}s
-        </button>
+      <div style={{ marginTop: 10 }}>
+        <button className="wallet-button">🟣 Connect</button>
+        <span className="cooldown">Cooldown: {cooldown}s</span>
       </div>
+
       {outcome && (
         <>
-          <div style={{ color: outcome.type === "win" ? "lime" : "red", marginTop: "10px" }}>
-            {outcome.type === "win" ? "🦊 You Won: Legend!" : "💀 Better Luck Next Time: Rugged!"}
-          </div>
-          <p><b>{outcome.text}</b></p>
-          <img src={outcome.image} alt="result meme" className="outcome-image" />
+          <h4 style={{ marginTop: 16 }}>
+            {outcome.type === 'win' ? '🦊 You Won: Legend!' : '💀 Rugged!'}
+          </h4>
+          <p style={{ fontWeight: 'bold' }}>{outcome.text}</p>
+          <img
+            src={outcome.image}
+            alt="result meme"
+            className="result-image"
+          />
         </>
       )}
-      <button onClick={spin} style={{ marginTop: "10px" }}>🎰 Spin</button>
-      {outcome && (
-        <button className="share-button" onClick={share}>Share on Twitter</button>
-      )}
+
+      <div>
+        <button className="wallet-button" onClick={handleSpin}>
+          🎰 Spin
+        </button>
+        <button className="share-button" onClick={handleShare}>
+          Share on Twitter
+        </button>
+      </div>
     </div>
-  );
+  )
 }
 
-export default function App() {
-  const endpoint = clusterApiUrl("mainnet-beta");
-  const wallet = new PhantomWalletAdapter();
-
-  return (
-    <WalletProvider wallets={[wallet]} autoConnect>
-      <InnerApp />
-    </WalletProvider>
-  );
-}
+export default App

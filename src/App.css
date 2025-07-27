@@ -1,141 +1,99 @@
-body {
-  margin: 0;
-  font-family: 'Chakra Petch', sans-serif;
-  background: #111;
-  color: #eee;
-  text-align: center;
-}
-
 .app-container {
   padding: 2rem;
+  color: #fff;
+  font-family: "Sora", sans-serif;
+}
+
+.game-frame {
+  border: 2px solid #3a3a3a;
+  padding: 24px;
+  border-radius: 18px;
+  background-color: #151515;
+  box-shadow: 0 0 12px rgba(255, 0, 255, 0.2);
+  max-width: 480px;
+  margin: auto;
 }
 
 .app-title {
-  font-size: 2.5rem;
-  color: #fff;
-  font-weight: bold;
-  animation: pulseTitle 2s infinite;
-}
-
-@keyframes pulseTitle {
-  0%, 100% { text-shadow: 0 0 5px #ff0080; }
-  50% { text-shadow: 0 0 20px #ff0080; }
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #ff70e0;
+  text-shadow: 0 0 4px #ff00d4;
 }
 
 .wallet-row {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin: 1rem 0;
+  gap: 16px;
+  margin-bottom: 12px;
 }
 
 .wallet-display {
-  background: #292929;
+  background-color: #2e2e2e;
   border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
+  padding: 8px 14px;
+  border-radius: 10px;
   color: #fff;
   font-weight: bold;
-  font-size: 0.9rem;
-}
-
-.balance {
-  color: #ccc;
-  font-size: 0.95rem;
 }
 
 .controls {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.spin-button {
-  background: #ff3b3b;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 0.75rem 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 0 10px #ff3b3b55;
-  transition: 0.2s ease-in-out;
-}
-.spin-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #ff3b3b99;
+  gap: 14px;
+  margin-bottom: 1rem;
 }
 
 .cooldown {
-  color: #ff8888;
-  font-weight: bold;
-  border: 1px dashed #ff3b3b;
-  border-radius: 10px;
-  padding: 0.6rem 1rem;
+  color: #ff6b6b;
+  border: 1px dashed #ff6b6b;
+  padding: 6px 12px;
+  border-radius: 8px;
 }
 
-.result {
-  margin-top: 2rem;
-}
-
-.result-image {
-  max-width: 90%;
-  border-radius: 16px;
-  box-shadow: 0 0 20px #000;
-  margin-top: 1rem;
-}
-
-.outcome-label {
-  font-size: 1.4rem;
-  margin-top: 1rem;
-  font-weight: bold;
-  color: #fff;
-  animation: pulseWin 2s infinite;
-}
-
-@keyframes pulseWin {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.share-button {
-  margin-top: 1rem;
-  background: #10c86e;
+.spin-button {
+  background-color: #ff3b3b;
   border: none;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  font-weight: bold;
+  padding: 10px 16px;
   border-radius: 10px;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
 }
-.result-image-small {
-  width: 280px;
-  margin: 1rem auto;
-  display: block;
-  border-radius: 10px;
+
+.spin-button:hover {
+  background-color: #e02727;
 }
 
-.result-text {
-  font-size: 1.2rem;
-  margin-top: 1.5rem;
+.outcome-summary {
   text-align: center;
-  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.result-image.small-image {
+  max-width: 280px;
+  border-radius: 10px;
+  margin: 16px auto;
+  display: block;
 }
 
 .share-button {
+  display: block;
+  margin: 10px auto;
+  padding: 8px 16px;
   background-color: #1da1f2;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 10px auto;
-  display: block;
-  color: #fff;
   border-radius: 8px;
+  font-weight: bold;
+  color: #fff;
   cursor: pointer;
 }
 
 .share-button:hover {
-  background-color: #0d8ddb;
+  background-color: #0d8ce0;
 }

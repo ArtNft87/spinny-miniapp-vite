@@ -4,15 +4,9 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import "./App.css";
 
 const outcomes = [
-  { text: "You’d be better off buying LUNA 🌕 in 2022", image: "/memes/lose3.png", type: "lose" },
-  { text: "Spinny roasts Pepe — again 🐸", image: "/memes/lose5.png", type: "lose" },
-  { text: "You spun worse than a normie 🫠", image: "/memes/lose6.png", type: "lose" },
-  { text: "Bottom fraud. Nice buy, genius. 👎", image: "/memes/lose2.png", type: "lose" },
+  { text: "You’d be better off buying LUNA in 2022", image: "/memes/lose3.png", type: "lose" },
   { text: "SHIBA? More like Shitba. 🐕‍🦺", image: "/memes/lose7.png", type: "lose" },
-  { text: "You earned another spin 🌀", image: "/memes/win3.png", type: "win" },
   { text: "Spinny approves. Degen mode on 🦊", image: "/memes/win1.png", type: "win" },
-  { text: "Meme minigames coming soon... 🔥", image: "/memes/win2.png", type: "win" },
-  { text: "Feeling lucky, punk? 🍀", image: "/memes/win6.png", type: "win" },
   { text: "Legendary spin. +420 $PINN 🚀", image: "/memes/win7.gif", type: "win" },
 ];
 
@@ -34,19 +28,6 @@ export default function App() {
     setCooldown(30);
   };
 
-  const shareToTwitter = () => {
-    if (!result) return;
-    const quote = result.text;
-    const win = result.type === "win";
-    const outcomeText = win
-      ? `🔥 I just WON at Spinny Degen Roulette\n"${quote}"`
-      : `💀 I just got RUGGED by Spinny\n"${quote}"`;
-
-    const url = encodeURIComponent("https://t.me/spinnit_xyz"); // Replace later
-    const text = encodeURIComponent(`${outcomeText}\nSpinny’s raining $PINN and doing buybacks today. Touch grass & spin.\n${url}`);
-    window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
-  };
-
   useEffect(() => {
     const timer = setInterval(() => {
       setCooldown((prev) => (prev > 0 ? prev - 1 : 0));
@@ -54,42 +35,54 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
+  const shareToTwitter = () => {
+    if (!result) return;
+    const winOrLoseText = result.type === "win" ? "I just WON with Spinny" : "I just got RUGGED by Spinny";
+    const quote = result.text.replace(/"/g, "'");
+    const tweet = `${winOrLoseText} (@Spinnit_xyz)\n"${quote}"\nSpinny’s raining $PINN and doing buybacks. Touch grass & spin.\nhttps://t.me/spinnit_xyz`;
+    const encoded = encodeURIComponent(tweet);
+    window.open(`https://twitter.com/intent/tweet?text=${encoded}`, "_blank");
+  };
+
   return (
     <div className="app-container">
-      <h1 className="app-title neon">Spinny Degen Roulette</h1>
+      <div className="game-frame">
+        <h1 className="app-title">Spinny Degen Roulette</h1>
 
-      {publicKey && (
-        <div className="wallet-row">
-          <button className="wallet-display">{shortWallet}</button>
-          <p className="balance">$PINN Balance: <strong>{mockBalance}</strong></p>
+        {publicKey && (
+          <div className="wallet-row">
+            <button className="wallet-display">{shortWallet}</button>
+            <p className="balance">$PINN Balance: <strong>{mockBalance}</strong></p>
+          </div>
+        )}
+
+        <div className="controls">
+          <WalletMultiButton className="wallet-button" />
+          {cooldown > 0 ? (
+            <div className="cooldown">Cooldown: {cooldown}s</div>
+          ) : (
+            publicKey && (
+              <button className="spin-button" onClick={spin}>
+                Spin
+              </button>
+            )
+          )}
         </div>
-      )}
 
-      <div className="controls">
-        <WalletMultiButton className="wallet-button" />
-        {cooldown > 0 ? (
-          <div className="cooldown">Cooldown: {cooldown}s</div>
-        ) : (
-          publicKey && (
-            <button className="spin-button" onClick={spin}>
-              Spin
-            </button>
-          )
+        {result && (
+          <div className="outcome-summary">
+            {result.type === "win" ? "🎉 You Won: Legend!" : "💀 Better Luck Next Time: Rugged!"}
+          </div>
+        )}
+
+        {result && (
+          <div className={`result ${result.type}`}>
+            <h2>{result.text}</h2>
+            <img src={result.image} alt="Spin result" className="result-image small-image" />
+            <button className="share-button" onClick={shareToTwitter}>📤 Share</button>
+          </div>
         )}
       </div>
-
-      {result && (
-        <>
-          <h2 className="result-text">{result.text}</h2>
-          <img src={result.image} alt="Spin result" className="result-image-small" />
-          <div className={`outcome-label ${result.type}`}>
-            {result.type === "win" ? "🔥 YOU WON" : "💀 RUGGED"}
-          </div>
-          <button className="share-button" onClick={shareToTwitter}>
-            📤 Share
-          </button>
-        </>
-      )}
     </div>
   );
 }

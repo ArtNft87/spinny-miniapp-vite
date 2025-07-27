@@ -110,3 +110,32 @@ body {
   border-radius: 10px;
   cursor: pointer;
 }
+.result-image-small {
+  width: 280px;
+  margin: 1rem auto;
+  display: block;
+  border-radius: 10px;
+}
+
+.result-text {
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.share-button {
+  background-color: #1da1f2;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px auto;
+  display: block;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.share-button:hover {
+  background-color: #0d8ddb;
+}

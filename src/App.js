@@ -96,7 +96,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1 className="title">Spinny Degen Roulette</h1>
+      <h1 vlassName="title">Spinny Degen Roulette</h1>
 
       <div className="mascot-frame">
         <img src="/spinny-degen.png" className="mascot" alt="mascot" />

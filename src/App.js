@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 
-// WIN OUTCOMES (text + placeholder image)
+// WIN OUTCOMES
 const winOutcomes = [
   { text: "Legend! You did it.", image: "/memes/win1.png" },
   { text: "Degen God. Touch grass? Never.", image: "/memes/win2.gif" },
@@ -23,7 +23,6 @@ const winOutcomes = [
   { text: "Who needs L2s? You’re L0: Legendary Origin.", image: "/memes/win3.png" },
 ];
 
-// LOSE OUTCOMES (text + placeholder image)
 const loseOutcomes = [
   { text: "Rugged harder than Bitconnect.", image: "/memes/lose1.png" },
   { text: "Even FTX had better odds.", image: "/memes/lose2.gif" },
@@ -63,11 +62,9 @@ export default function App() {
     if (cooldown > 0) return;
     const result = getRandomOutcome();
     setOutcome(result);
-
     if (result.type === "win") {
       confetti({ particleCount: 100, spread: 70 });
     }
-
     setCooldown(30);
   };
 
@@ -82,19 +79,16 @@ export default function App() {
 
   const handleShare = () => {
     if (!outcome) return;
-
     const base = "https://x.com/intent/tweet";
-    const copy =
-      outcome.type === "win"
-        ? `I just spun the wheel on @Spinnit_xyz and WON 🔥\n\n"${outcome.text}"\n\nSpin now or get left behind — $PINN buybacks in full force.`
-        : `I got rugged by the wheel on @Spinnit_xyz 🤡\n\n"${outcome.text}"\n\nOne spin can change your fate. Or destroy it. $PINN lives.`;
-
+    const copy = outcome.type === "win"
+      ? `I just spun the wheel on @Spinnit_xyz and WON 🔥\n\n"${outcome.text}"\n\nSpin now or get left behind — $PINN buybacks in full force.`
+      : `I got rugged by the wheel on @Spinnit_xyz 🤡\n\n"${outcome.text}"\n\nOne spin can change your fate. Or destroy it. $PINN lives.`;
     const url = `https://spinnit.xyz`;
     const tweet = `${base}?text=${encodeURIComponent(copy)}&url=${encodeURIComponent(url)}`;
     window.open(tweet, "_blank");
   };
 
-      return (
+  return (
     <div className="app">
       <h1 className="title">Spinny Degen Roulette</h1>
 
@@ -104,9 +98,7 @@ export default function App() {
       </div>
 
       <div className="game-frame">
-        <button className="wallet-button">
-          {shortenAddress(wallet)}
-        </button>
+        <button className="wallet-button">{shortenAddress(wallet)}</button>
 
         <button
           onClick={handleSpin}
@@ -132,4 +124,4 @@ export default function App() {
       </div>
     </div>
   );
-
+}

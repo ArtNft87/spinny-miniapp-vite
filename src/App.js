@@ -89,39 +89,39 @@ export default function App() {
   };
 
   return (
-    <div className="app">
-      <h1 className="title">Spinny Degen Roulette</h1>
+  <div className="app">
+    <h1 className="title">Spinny Degen Roulette</h1>
 
-      <div className="mascot-frame">
-        <img src="/spinny-degen.png" className="mascot" alt="mascot" />
-        <img src="/roulette.png" className="roulette" alt="roulette" />
-      </div>
-
-      <div className="game-frame">
-        <button className="wallet-button">{shortenAddress(wallet)}</button>
-
-        <button
-          onClick={handleSpin}
-          disabled={cooldown > 0}
-          className="spin-button"
-        >
-          {cooldown > 0 ? `Wait ${cooldown}s` : "SPIN"}
-        </button>
-
-        {outcome && (
-          <>
-            <img src={outcome.image} alt="Meme" className="meme-image" />
-            <div className={`result-text ${outcome.type}`}>
-              {outcome.type === "win"
-                ? `You Won: ${outcome.text}`
-                : `Better Luck Next Time: ${outcome.text}`}
-            </div>
-            <button onClick={handleShare} className="share-button">
-              Share on Twitter
-            </button>
-          </>
-        )}
-      </div>
+    <div className="mascot-frame">
+      <img src="/spinny-degen.png" className="mascot" alt="mascot" />
+      <img src="/roulette.png" className="roulette" alt="roulette" />
     </div>
-  );
-}
+
+    <div className="game-frame">
+      <button className="wallet-button">{shortenAddress(wallet)}</button>
+
+      <button
+        onClick={handleSpin}
+        disabled={cooldown > 0}
+        className="spin-button"
+      >
+        {cooldown > 0 ? `Wait ${cooldown}s` : "SPIN"}
+      </button>
+
+      {outcome && (
+        <>
+          <img src={outcome.image} alt="Meme" className="meme-image" />
+          <div className={`result-text ${outcome.type}`}>
+            {outcome.type === "win"
+              ? `You Won: ${outcome.text}`
+              : `Better Luck Next Time: ${outcome.text}`}
+          </div>
+          <button onClick={handleShare} className="share-button">
+            Share on Twitter
+          </button>
+        </>
+      )}
+    </div>
+  </div>
+);
+

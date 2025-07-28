@@ -30,7 +30,6 @@ export default function App() {
 
   const handleSpin = () => {
     if (cooldown > 0) return;
-
     const result = getRandomOutcome();
     setOutcome(result);
 

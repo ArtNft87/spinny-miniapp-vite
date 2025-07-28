@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./src/App.jsx";        // ✅ fixed path
-import "./src/App.css";                // ✅ fixed path
+import App from "./src/App.js";  // ✅ updated extension
+import "./src/App.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
